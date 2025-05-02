@@ -25,7 +25,24 @@ export class UsersService {
         return newUser.save();
     }
 
+    async logout(userId: string): Promise<void> {
+        // Logique de déconnexion (par exemple, supprimer le token de session ou le marquer comme expiré)
+        // Cela dépend de la façon dont vous gérez les sessions et les tokens dans votre application
+        console.log(`User with ID ${userId} logged out`);
+    }
+
     async findAll(): Promise<User[]> {
         return this.userModel.find().exec();
+    }
+
+    async findOne(id: string): Promise<User | null> {
+        if (!id) {
+            return null;
+        }
+        return this.userModel.findById(id).exec();
+    }
+
+    findByEmail(email: string): Promise<User | null> {
+        return this.userModel.findOne({ email }).exec();
     }
 }
