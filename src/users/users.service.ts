@@ -5,11 +5,14 @@ import { User } from './schemas/user.schema';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 
+import { Workspaces } from '../workspaces/schemas/workspace.schema';
+
 @Injectable()
 export class UsersService {
 
     constructor(
         @InjectModel(User.name) private userModel: Model<User>,
+        @InjectModel(Workspaces.name) private workspaceModel: Model<Workspaces>,
     ) {}
 
     async create(createUserDto: CreateUserDto): Promise<User> {
@@ -21,11 +24,14 @@ export class UsersService {
             password: hashedPassword,
         });
         
+        const savedUser = await newUser.save();
+        const newWorkspace = new this.workspaceModel({
+            name: createUserDto.name,
+            owner: savedUser._id,
+        });
         
         return newUser.save();
     }
-
-   
 
     async findAll(): Promise<User[]> {
         return this.userModel.find().exec();

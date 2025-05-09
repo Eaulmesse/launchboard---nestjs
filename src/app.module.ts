@@ -8,6 +8,8 @@ import { UsersModule } from './users/users.module';
 import { AuthService } from './auth/auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { AuthModule } from './auth/auth.module';
+import { WorkspacesModule } from './workspaces/workspaces.module';
+import { MembershipsModule } from './memberships/memberships.module';
 
 
 @Module({
@@ -18,6 +20,8 @@ import { AuthModule } from './auth/auth.module';
     MongooseModule.forRoot(process.env.MONGO_URI!),
     UsersModule,
     AuthModule,
+    WorkspacesModule,
+    MembershipsModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthService, JwtService],

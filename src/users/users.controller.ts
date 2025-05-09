@@ -11,12 +11,10 @@ import { Logger } from '@nestjs/common';
 export class UsersController {
     constructor(
         private readonly usersService: UsersService,
-        
     ) {}
 
     @Post()
     async createUser(@Body() createUserDto: CreateUserDto) {
-        
         return this.usersService.create(createUserDto); 
     }
 
