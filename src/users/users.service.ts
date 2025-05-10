@@ -20,6 +20,11 @@ export class UsersService {
     ) {}
 
     async create(createUserDto: CreateUserDto): Promise<User> {
+        const existingUser = await this.userModel.findOne({ email: createUserDto.email }).exec();
+        if (existingUser) {
+            throw new Error('User already exists');
+        }
+
         const saltRound = 10;
         const hashedPassword = await bcrypt.hash(createUserDto.password, saltRound);
 
@@ -44,8 +49,6 @@ export class UsersService {
             role: 'creator',
         });
         
-
-
         return newUser.save();
     }
 
