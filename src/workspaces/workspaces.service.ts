@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Workspaces } from './schemas/workspace.schema';
-
+import { MembershipsService } from 'src/memberships/memberships.service';
 
 @Injectable()
 export class WorkspacesService {

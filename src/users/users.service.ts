@@ -6,6 +6,8 @@ import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 
 import { Workspaces } from '../workspaces/schemas/workspace.schema';
+import { WorkspacesService } from '../workspaces/workspaces.service';
+import { MembershipsService } from '../memberships/memberships.service';
 
 @Injectable()
 export class UsersService {
@@ -13,6 +15,8 @@ export class UsersService {
     constructor(
         @InjectModel(User.name) private userModel: Model<User>,
         @InjectModel(Workspaces.name) private workspaceModel: Model<Workspaces>,
+        private readonly workspacesService: WorkspacesService,
+        private readonly membershipsService: MembershipsService,
     ) {}
 
     async create(createUserDto: CreateUserDto): Promise<User> {
@@ -29,7 +33,19 @@ export class UsersService {
             name: createUserDto.name,
             owner: savedUser._id,
         });
+
+        const workspace = await this.workspacesService.create({
+            name: `${createUserDto.name}'s Workspace`,
+        })
+
+        await this.membershipsService.create({
+            user: savedUser._id,
+            workspace: workspace._id,
+            role: 'creator',
+        });
         
+
+
         return newUser.save();
     }
 
