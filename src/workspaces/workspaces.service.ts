@@ -8,12 +8,15 @@ import { MembershipsService } from 'src/memberships/memberships.service';
 export class WorkspacesService {
     constructor(
         @InjectModel(Workspaces.name) private workspaceModel: Model<Workspaces>,
+        // private readonly usersService: UsersService,
     ) {}
 
     async create(createWorkspaceDto: any): Promise<Workspaces> {
         const newWorkspace = new this.workspaceModel(createWorkspaceDto);
         return newWorkspace.save();
     }
+
+    
 
     async findByUserId(userId: string): Promise<Workspaces[]> {
         return this.workspaceModel.find({ owner: userId }).exec();

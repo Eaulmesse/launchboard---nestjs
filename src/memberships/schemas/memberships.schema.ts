@@ -5,8 +5,8 @@ import { Role } from '../../common/enums/role.enum';
 
 @Schema()
 export class Memberships extends Document {
-  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
-  user: Types.ObjectId;
+  @Prop({ type: Types.ObjectId, ref: 'User', default: [] })
+  users: Types.ObjectId[];
 
   @Prop({ type: Types.ObjectId, ref: 'Workspace', required: true })
   workspace: Types.ObjectId;
