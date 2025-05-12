@@ -1,19 +1,17 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-import { Types } from 'mongoose';
+import { Document, Types } from 'mongoose';
 import { Role } from '../../common/enums/role.enum';
 
 @Schema()
-export class Memberships extends Document {
-  @Prop({ type: Types.ObjectId, ref: 'User', default: [] })
-  users: Types.ObjectId[];
+export class Membership extends Document {
+  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
+  user: Types.ObjectId; // L'utilisateur concerné
 
   @Prop({ type: Types.ObjectId, ref: 'Workspace', required: true })
-  workspace: Types.ObjectId;
+  workspace: Types.ObjectId; // L'espace de travail concerné
 
   @Prop({ enum: Role, required: true })
-  role: Role;
-
+  role: Role; // Le rôle de l'utilisateur dans cet espace (creator ou collaborator)
 }
 
-export const MembershipsSchema = SchemaFactory.createForClass(Memberships);
+export const MembershipSchema = SchemaFactory.createForClass(Membership);

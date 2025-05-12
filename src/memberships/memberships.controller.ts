@@ -14,13 +14,13 @@ export class MembershipsController {
         return this.membershipsService.create(createMembershipDto);
     }
 
-    @Post('add-user/:membershipId/:userId')
-    async addUserToWorkspace(
-        @Param('membershipId') membershipId: string,
-        @Param('userId') userId: string, // Extraire userId depuis l'URL
-    ) {
-        return this.membershipsService.addUserToWorkspace(membershipId, userId);
-    }
+    // @Post('add-user/:membershipId/:userId')
+    // async addUserToWorkspace(
+    //     @Param('membershipId') membershipId: string,
+    //     @Param('userId') userId: string, // Extraire userId depuis l'URL
+    // ) {
+    //     return this.membershipsService.addUserToWorkspace(membershipId, userId);
+    // }
 
     @Get()
     async getAllMemberships() {
