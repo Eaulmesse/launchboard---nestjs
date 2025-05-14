@@ -39,9 +39,12 @@ export class AuthService {
     return { message: 'Login successful' };
   }
 
-  // async logout(userId: string): Promise<void> {
-  //   // Logique de déconnexion (par exemple, supprimer le token de session ou le marquer comme expiré)
-  //   // Cela dépend de la façon dont vous gérez les sessions et les tokens dans votre application
-  //   console.log(`User with ID ${userId} logged out`);
-  // }
+  async logout(res: Response): Promise<{ message: string }> {
+    res.clearCookie('access_token', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+    });
+    return { message: 'Logout successful' };
+  }
 }

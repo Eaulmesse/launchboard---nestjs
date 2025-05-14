@@ -3,6 +3,7 @@ import { MembershipsService } from './memberships.service';
 import { MembershipsController } from './memberships.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Membership, MembershipSchema } from './schemas/memberships.schema';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -11,6 +12,10 @@ import { Membership, MembershipSchema } from './schemas/memberships.schema';
       { name: 'User', schema: MembershipSchema },
       { name: 'Workspace', schema: MembershipSchema },
     ]),
+    JwtModule.register({
+      secret: `${process.env.TOKEN_SECRET}` ,
+      signOptions: { expiresIn: '1h' },
+    }),
   ],
   providers: [MembershipsService],
   controllers: [MembershipsController],

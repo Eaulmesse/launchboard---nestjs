@@ -7,6 +7,7 @@ import { Workspaces, WorkspacesSchema } from '../workspaces/schemas/workspace.sc
 import { WorkspacesModule } from 'src/workspaces/workspaces.module';
 import { MembershipsModule } from 'src/memberships/memberships.module';
 import { Membership, MembershipSchema } from 'src/memberships/schemas/memberships.schema';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -14,6 +15,10 @@ import { Membership, MembershipSchema } from 'src/memberships/schemas/membership
       { name: User.name, schema: UserSchema },
       { name: Workspaces.name, schema: WorkspacesSchema },
     ]),
+    JwtModule.register({
+      secret: `${process.env.TOKEN_SECRET}` ,
+      signOptions: { expiresIn: '1h' },
+  }),
     WorkspacesModule,
     MembershipsModule,
   ],

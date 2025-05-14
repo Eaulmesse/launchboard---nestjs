@@ -1,8 +1,8 @@
 // src/users/users.controller.ts
-import { Controller, Post, Get, Body } from '@nestjs/common';
+import { Controller, Post, Get, Body, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { Logger } from '@nestjs/common';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 
 
@@ -17,7 +17,8 @@ export class UsersController {
     async createUser(@Body() createUserDto: CreateUserDto) {
         return this.usersService.create(createUserDto); 
     }
-
+    
+    @UseGuards(AuthGuard)
     @Get()
     async getAllUsers() {
         return this.usersService.findAll();
